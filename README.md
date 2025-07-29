@@ -1,4 +1,3 @@
-
 # 今日の癒し猫 🐱
 
 ![今日の猫](https://cdn2.thecatapi.com/images/placeholder.jpg)
