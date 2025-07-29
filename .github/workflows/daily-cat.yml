@@ -1,0 +1,49 @@
+name: Daily Cat Update
+on:
+  schedule:
+    - cron: '0 9 * * *'  # 毎日朝9時（UTC）
+  workflow_dispatch:     # 手動実行も可能
+
+jobs:
+  update-cat:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # ファイル更新のための権限
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Get cat image and update README
+        run: |
+          # 猫画像APIから画像情報を取得
+          CAT_DATA=$(curl -s "https://api.thecatapi.com/v1/images/search")
+          CAT_URL=$(echo $CAT_DATA | jq -r '.[0].url')
+          CAT_WIDTH=$(echo $CAT_DATA | jq -r '.[0].width')
+          CAT_HEIGHT=$(echo $CAT_DATA | jq -r '.[0].height')
+          
+          # 現在の日時を取得
+          CURRENT_DATE=$(date '+%Y-%m-%d %H:%M')
+          
+          # README.mdを更新
+          cat > README.md << EOF
+          # 今日の癒し猫 🐱
+          
+          ![今日の猫]($CAT_URL)
+          
+          **画像情報:**
+          - サイズ: ${CAT_WIDTH} x ${CAT_HEIGHT}
+          - 最終更新: $CURRENT_DATE
+          
+          ---
+          
+          このリポジトリは毎日朝9時に自動で猫画像が更新されます。
+          GitHub Actionsの力で、365日違う猫に出会えます！
+          EOF
+          
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "🐱 今日の猫を更新: $(date '+%Y-%m-%d')" || exit 0
+          git push
