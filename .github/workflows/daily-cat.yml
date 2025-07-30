@@ -1,7 +1,7 @@
 name: Daily Cat Update
 on:
   schedule:
-    - cron: '0 9 * * *'  # 毎日15時（日本時間：UTC - 6）
+    - cron: '0 8 * * *'  # 毎日17時（日本時間：UTC - 9）
   workflow_dispatch:     # 手動実行も可能
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
           
           ---
           
-          このリポジトリは毎日朝9時に自動で猫画像が更新されます。
+          このリポジトリは毎日夕方5時に自動で猫画像が更新されます。
           GitHub Actionsの力で、365日違う猫に出会えます！
           EOF
           
