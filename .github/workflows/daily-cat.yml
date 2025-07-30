@@ -1,7 +1,7 @@
 name: Daily Cat Update
 on:
   schedule:
-    - cron: '0 9 * * *'  # 毎日朝9時（UTC）
+    - cron: '0 9 * * *'  # 毎日15時（日本時間：UTC - 6）
   workflow_dispatch:     # 手動実行も可能
 
 jobs:
