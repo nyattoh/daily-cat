@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ネコたちのケーキ作り - 4コマ漫画</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+        }
+        .manga-container {
+            background: white;
+            border: 4px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 8px 8px 0 #333;
+            max-width: 500px;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #d44;
+            text-shadow: 2px 2px 0 #fcc;
+        }
+        .panel {
+            border: 3px solid #333;
+            height: 200px;
+            margin-bottom: 10px;
+            position: relative;
+            background: #fefefe;
+            overflow: hidden;
+        }
+        .panel:last-child {
+            margin-bottom: 0;
+        }
+        .panel-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: #333;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10;
+        }
+        /* キャラクター */
+        .witch-cat {
+            position: absolute;
+            font-size: 60px;
+            filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.3));
+        }
+        .black-cat {
+            position: absolute;
+            font-size: 55px;
+            filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.3));
+        }
+        /* 吹き出し */
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 13px;
+            max-width: 150px;
+            z-index: 5;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #333 transparent transparent;
+        }
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            left: 22px;
+            border-width: 8px 8px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+            z-index: 1;
+        }
+        /* パネル1: 材料準備 */
+        .panel1 .witch-cat {
+            bottom: 20px;
+            left: 30px;
+        }
+        .panel1 .black-cat {
+            bottom: 25px;
+            right: 30px;
+        }
+        .panel1 .ingredients {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 35px;
+        }
+        .panel1 .speech-bubble {
+            top: 15px;
+            right: 20px;
+        }
+        .panel1 .bg {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            opacity: 0.5;
+        }
+        /* パネル2: 混ぜる */
+        .panel2 .witch-cat {
+            bottom: 30px;
+            left: 60px;
+            animation: mix 0.5s ease-in-out infinite;
+        }
+        .panel2 .black-cat {
+            bottom: 35px;
+            right: 50px;
+        }
+        .panel2 .bowl {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+        }
+        .panel2 .speech-bubble {
+            top: 10px;
+            left: 15px;
+        }
+        .panel2 .effect {
+            position: absolute;
+            font-size: 24px;
+            color: #f90;
+            font-weight: bold;
+        }
+        .panel2 .effect1 { top: 60px; left: 45%; }
+        .panel2 .effect2 { top: 80px; left: 55%; }
+        @keyframes mix {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        /* パネル3: 完成 */
+        .panel3 .witch-cat {
+            bottom: 30px;
+            left: 20px;
+        }
+        .panel3 .black-cat {
+            bottom: 35px;
+            right: 20px;
+        }
+        .panel3 .cake {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 70px;
+        }
+        .panel3 .sparkle {
+            position: absolute;
+            font-size: 20px;
+            animation: sparkle 1s ease-in-out infinite;
+        }
+        .panel3 .sparkle1 { top: 30px; left: 40%; }
+        .panel3 .sparkle2 { top: 50px; right: 35%; }
+        .panel3 .sparkle3 { top: 25px; right: 40%; }
+        .panel3 .speech-bubble {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .panel3 .speech-bubble::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .panel3 .speech-bubble::before {
+            left: 52%;
+            transform: translateX(-50%);
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        /* パネル4: プレゼント */
+        .panel4 {
+            background: linear-gradient(135deg, #fff8e8 0%, #ffe8e8 100%);
+        }
+        .panel4 .witch-cat {
+            bottom: 20px;
+            left: 15px;
+            font-size: 50px;
+        }
+        .panel4 .black-cat {
+            bottom: 25px;
+            right: 15px;
+            font-size: 45px;
+        }
+        .panel4 .gift {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 80px;
+        }
+        .panel4 .heart {
+            position: absolute;
+            font-size: 25px;
+            animation: float 2s ease-in-out infinite;
+        }
+        .panel4 .heart1 { top: 20px; left: 30%; animation-delay: 0s; }
+        .panel4 .heart2 { top: 40px; right: 25%; animation-delay: 0.5s; }
+        .panel4 .heart3 { top: 15px; left: 50%; animation-delay: 1s; }
+        .panel4 .speech-bubble {
+            top: 8px;
+            right: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #d44;
+        }
+        .panel4 .speech-bubble2 {
+            top: 8px;
+            left: 10px;
+            font-size: 14px;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="manga-container">
+        <h1 class="title">ネコたちのケーキ作り</h1>
+
+        <!-- パネル1: 材料を準備 -->
+        <div class="panel panel1">
+            <div class="panel-number">1</div>
+            <div class="bg">🏠 キッチン</div>
+            <div class="speech-bubble">一緒にケーキを作ろう!</div>
+            <div class="witch-cat">🐱</div>
+            <div class="black-cat">🐈‍⬛</div>
+            <div class="ingredients">🥚🧈🍫🥛</div>
+        </div>
+
+        <!-- パネル2: 材料を混ぜる -->
+        <div class="panel panel2">
+            <div class="panel-number">2</div>
+            <div class="speech-bubble">まぜまぜ〜♪</div>
+            <div class="effect effect1">くるくる</div>
+            <div class="effect effect2">♪</div>
+            <div class="witch-cat">🐱</div>
+            <div class="bowl">🥣</div>
+            <div class="black-cat">🐈‍⬛</div>
+        </div>
+
+        <!-- パネル3: ケーキ完成 -->
+        <div class="panel panel3">
+            <div class="panel-number">3</div>
+            <div class="speech-bubble">できたにゃ〜!</div>
+            <div class="sparkle sparkle1">✨</div>
+            <div class="sparkle sparkle2">✨</div>
+            <div class="sparkle sparkle3">⭐</div>
+            <div class="witch-cat">🐱</div>
+            <div class="cake">🎂</div>
+            <div class="black-cat">🐈‍⬛</div>
+        </div>
+
+        <!-- パネル4: プレゼントケースに入れる -->
+        <div class="panel panel4">
+            <div class="panel-number">4</div>
+            <div class="speech-bubble speech-bubble2">プレゼント完成!</div>
+            <div class="speech-bubble">大成功にゃ♡</div>
+            <div class="heart heart1">💕</div>
+            <div class="heart heart2">💖</div>
+            <div class="heart heart3">💝</div>
+            <div class="witch-cat">🐱</div>
+            <div class="gift">🎁</div>
+            <div class="black-cat">🐈‍⬛</div>
+        </div>
+
+        <div class="footer">〜 おしまい 〜</div>
+    </div>
+</body>
+</html>
